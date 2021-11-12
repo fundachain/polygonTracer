@@ -1,4 +1,5 @@
-import telebot , web3,mariadb,requests
+import telebot , web3,mariadb,requests,sys
+from bs4 import BeautifulSoup
 
 #api polygonscan
 url = "https://api.polygonscan.com/api?module=account&action=txlist&address=0x32d295Cfedc58A638d1CaeF98BE9A895E15d5f6C&startblock=1&endblock=99999999&sort=asc&apikey=V7QT1U7ARJZZ52U5T3WBBPKWW5A6KIWURT"
@@ -47,8 +48,15 @@ while (True) :
         else :
             h = r1["hash"]
             # print("ALERT", "new hash is : ",h)
-            t = "ALERT"
-            bot.send_message(536667805,t)
+            # t = "ALERT"
+            func = requests.get("https://polygonscan.com/tx/"+h)
+            soup = BeautifulSoup(func.text , 'html.parser')
+            func_value = soup.find(id='inputdata')
+            func_value = func_value.getText("Function")
+            
+            t="🚨 Alert 🚨 \n"+func_value+"\n"+"tx id : \n"+ "https://polygonscan.com/tx/"+h
+            bot.send_message(132916604,t)
+
     else :
         r = requests.get(url)
         r = r.json()
