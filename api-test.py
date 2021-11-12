@@ -37,7 +37,7 @@ def account_add(message):
 r = requests.get(url)
 r = r.json()
 h = ""
-while True :
+while (True) :
     
     if r["status"] == "1" :
         r1  = r["result"]
