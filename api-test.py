@@ -52,4 +52,7 @@ while True :
     else :
         r = requests.get(url)
         r = r.json()
+    r = requests.get(url)
+    r = r.json()
+
 bot.infinity_polling()
