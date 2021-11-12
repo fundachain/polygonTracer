@@ -48,7 +48,7 @@ while True :
             h = r1["hash"]
             # print("ALERT", "new hash is : ",h)
             t = "ALERT"
-            bot.send_message(132916604,t)
+            bot.send_message(536667805,t)
     else :
         r = requests.get(url)
         r = r.json()
