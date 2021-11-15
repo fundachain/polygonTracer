@@ -1,40 +1,13 @@
 import telebot , web3,mariadb,requests,sys
 from bs4 import BeautifulSoup
 
-#api polygonscan
-url = "https://api.polygonscan.com/api?module=account&action=txlist&address=0x32d295Cfedc58A638d1CaeF98BE9A895E15d5f6C&startblock=1&endblock=99999999&sort=asc&apikey=V7QT1U7ARJZZ52U5T3WBBPKWW5A6KIWURT"
+#api polygonscan (replace public address{ADDRESS} & apikey{KEY}
+url = "https://api.polygonscan.com/api?module=account&action=txlist&address=ADDRESS&startblock=1&endblock=99999999&sort=asc&apikey=KEY"
 
 # telegram bot connection  - enter BOT key
-bot = telebot.TeleBot("2053507571:AAGLh6I9PbRJeKFG8TW3fYA4EGgUtpKAV04", parse_mode=None)
-
-#database connection 
-
-try:
-    conn = mariadb.connect(
-        user="root",
-        password="toor",
-        host="localhost",
-        port=3306,
-        database="poly"
-
-    )
-    
-except mariadb.Error as e:
-    print(f"Error connecting to MariaDB Platform: {e}")
-    sys.exit(1)
-
-# Get Cursor
-cur = conn.cursor()
+bot = telebot.TeleBot("TOKEN", parse_mode=None)
 
 
-@bot.message_handler(commands=['add'])
-def account_add(message):
-    pub_key = message.text.replace("/add ","")
-    command_sql = "INSERT INTO accounts(publickey) Values("+pub_key+")"
-    cur.execute(command_sql)
-    conn.commit()
-
-    bot.reply_to(message,"DOne "+pub_key)
 r = requests.get(url)
 r = r.json()
 h = ""
@@ -55,7 +28,8 @@ while (True) :
             func_value = func_value.getText("Function")
             
             t="🚨 Alert 🚨 \n"+func_value+"\n"+"tx id : \n"+ "https://polygonscan.com/tx/"+h
-            bot.send_message(132916604,t)
+            # replace your userid {USERID} you can use this bot for get userid : https://t.me/@userinfobot
+            bot.send_message(USERID,t)
 
     else :
         r = requests.get(url)
