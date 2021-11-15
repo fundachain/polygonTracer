@@ -1,4 +1,4 @@
-import telebot , web3,mariadb,requests,sys
+import telebot , web3,requests
 from bs4 import BeautifulSoup
 
 #api polygonscan (replace public address{ADDRESS} & apikey{KEY}
